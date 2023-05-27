@@ -143,42 +143,18 @@ window.addEventListener('load', function() {
                     var idl = getIdeal();
                     var csrf = idl.csrf, xtoken = idl.xtoken;
                     if (document.location.href.indexOf("entrystory") >= 0) {
-                        if (confirm("이모티콘 형식으로 업로드하시겠습니까? 취소시 사진으로 업로드")) {
-                        var crt = await (async function(cont, id){
-                            var crt = await fetch("https://playentry.org/graphql", {
-                                "headers": {
-                                    "Content-Type": "application/json",
-                                    "x-client-type": "Client",
-                                    "CSRF-Token": csrf,
-                                    "x-token": xtoken
-                                },
-                                "body": JSON.stringify({
-                                                "query":"\n    mutation CREATE_ENTRYSTORY(\n        \n    $content: String\n    $text: String\n    $image: String\n    $sticker: ID\n    $stickerItem: ID\n    $cursor: String\n\n    ) {\n        createEntryStory(\n            \n    content: $content\n    text: $text\n    image: $image\n    sticker: $sticker\n    stickerItem: $stickerItem\n    cursor: $cursor\n\n        ) {\n            warning\n            discuss{\n                \n    id\n    title\n    content\n    seContent\n    created\n    commentsLength\n    likesLength\n    visit\n    category\n    prefix\n    groupNotice\n    user {\n        \n    id\n    nickname\n    username\n    profileImage {\n        \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n    }\n    status {\n        following\n        follower\n    }\n    description\n    role\n\n    }\n    images {\n        filename\n        imageUrl\n    }\n    sticker {\n        \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n    }\n    progress\n    thumbnail\n    reply\n    bestComment {\n        \n    id\n    user {\n        \n    id\n    nickname\n    username\n    profileImage {\n        \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n    }\n    status {\n        following\n        follower\n    }\n    description\n    role\n\n    }\n    content\n    created\n    removed\n    blamed\n    commentsLength\n    likesLength\n    isLike\n    hide\n    image {\n        \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n    }\n    sticker {\n        \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n    }\n\n    }\n    blamed\n\n            }\n        }\n    }\n",
-                                "variables": {
-                                    "content": cont,
-                                    "stickerItem": id
-                                }
-                            }),
-                            "method": "POST"
-                        });
-                        return await crt.json();
-                    })(cont, id);
-                    location.reload()
+                        console.log(e.target)
+                        console.log(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0])
+                        cont = e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].textContent
+                        if(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].childNodes.length > 0){
+                            console.log(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild)
+                            e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.nodeValue =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
+                            e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.textContent =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
+                            e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.wholeText =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
+                            e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].value =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
                         }else {
-                            console.log(e.target)
-                            console.log(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0])
-                            cont = e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].textContent
-                            if(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].childNodes.length > 0){
-                                console.log(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild)
-                                e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.nodeValue =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
-                                e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.textContent =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
-                                e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.wholeText =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
-                                e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].value =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
-                            }else {
-                                e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].appendChild(new Text(cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype))
-                                e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].data = e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].childNodes[0].data
-                            }
-
+                            e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].appendChild(new Text(cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype))
+                            e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].data = e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].childNodes[0].data
                         }
                     }else if(document.location.href.includes("/group/community/")){
                         if (confirm("이모티콘 형식으로 업로드하시겠습니까? 취소시 사진으로 업로드")) {
