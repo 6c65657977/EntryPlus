@@ -11,8 +11,7 @@ window.addEventListener('load', function() {
                     }
                 }
                 if (document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.indexOf('\n') >= 0){
-                    document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML = document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replace('\n', '<br>').replaceAll('\n', '</br><br>').replaceAll('</div>', '</br></div>')
-                    console.log(document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replace('>', '><br>').replaceAll('\n', '</br><br>').replaceAll('</div>', '</br></div>'))
+                    document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML = document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replace('\n', '<br>').replaceAll('\n', '<br>').replaceAll('</div>', '</br></div>')
                 }
             }
         }
