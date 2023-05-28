@@ -10,6 +10,10 @@ window.addEventListener('load', function() {
                         document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML = '<br><img width=300px; height=auto; src=' + document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML +'> </img></br>'
                     }
                 }
+                if (document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.indexOf('\n') >= 0){
+                    document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML = document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replace('\n', '<br>').replaceAll('\n', '</br><br>').replaceAll('</div>', '</br></div>')
+                    console.log(document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replace('>', '><br>').replaceAll('\n', '</br><br>').replaceAll('</div>', '</br></div>'))
+                }
             }
         }
     }
