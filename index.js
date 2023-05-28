@@ -749,8 +749,16 @@ window.addEventListener('load', function() {
     button = true
     user_id = null
     pf = true
+    Rl = false
     setInterval((async function(){
+        if (location.href.indexOf('/follow') > 0){
+            Rl = true
+        }
         if (document.querySelectorAll('input#CommonSearch').length > 0) {
+            if (Rl){
+                Rl = false
+                location.reload()
+            }
             if (document.location.pathname == '/us' && document.location.host == 'playentry.org' && finded != document.location.href ){
                 if (user_id != null && pf == false && user_id != document.querySelector('input#CommonSearch').value){
                     console.log(pf)
@@ -847,8 +855,6 @@ window.addEventListener('load', function() {
                         bar.append(nick)
                         page.append(bar)
                         view.append(page)
-                        //document.querySelector('div.css-1em6nuk.ex6tgf88').style.padding = '2px 30px 80px'
-                        //document.querySelector('div.css-1em6nuk.ex6tgf88').parentElement.style.padding = '80px 30px 130px'
                         if (user_info != null){
                             if (user_info['profileImage'] == null) {
                                 profile.style.backgroundImage = 'url("/img/DefaultCardUserThmb.svg")'
