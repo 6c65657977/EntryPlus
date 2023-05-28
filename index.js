@@ -794,77 +794,82 @@ window.addEventListener('load', function() {
                 console.log(user_id)
                 if (user_id != null) {
                     if (document.querySelector('a.false.css-1xir1du.ex6tgf86').parentElement.childElementCount < 6){
-                    user_info = (await (await fetch("https://playentry.org/graphql", {
-                        "method": "POST",
-                        "headers":{
-                            "Content-Type": "application/json",
-                            "x-client-type": "Client",
-                            "CSRF-Token": csrf,
-                            "x-token": xtoken
-                        },
-                        "body": JSON.stringify({
-                            "query":"\n    query FIND_USERSTATUS_BY_USERNAME($id: String) {\n        userstatus(id: $id) {\n            id\n            nickname\n            username\n            description\n            shortUrl\n            profileImage {\n                \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n            }\n            coverImage {\n                \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n            }\n            role\n            mark {\n                \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n            }\n            studentTerm\n            status {\n                project\n                projectAll\n                study\n                studyAll\n                community {\n                    qna\n                    tips\n                    free\n                }\n                following\n                follower\n                bookmark {\n                    project\n                    study\n                }\n                userStatus\n            }\n        }\n    }\n",
-                            "variables":{"id": user_id.id}
-                        })
-                    })).json()).data.userstatus
-                    view = document.createElement('div')
-                    view.className = 'css-mqzyfz ex6tgf85'
-                    view.style.margin = '20px 0px 0px'
-                    view.style.padding = '8px 0px 38px'
-                    br = document.createElement('br')
-                    view.append(br)
-                    text = document.createElement('h3')
-                    text.style.margin = '10px 0px 0px'
-                    text.textContent = '유저'
-                    text.style.fontSize = '26px'
-                    text.style.fontWeight = 600
-                    view.append(text)
-                    nick = document.createElement('a')
-                    nick.textContent = ' ' + document.querySelector('input#CommonSearch').value
-                    nick.style.color = 'black'
-                    nick.style.fontSize = '50px'
-                    nick.style.fontWeight = 'bold'
-                    nick.style.lineHeight = '120px'
-                    page = document.createElement('div')
-                    page.className = 'css-d3v9zr ebdmqkt3'
-                    bar = document.createElement('div')
-                    box = document.createElement('a')
-                    bar.className = 'css-10snqeb ebdmqkt2'
-                    profile = document.createElement('img')
-                    profile.style.backgroundPosition = 'center'
-                    profile.style.width = '120px'
-                    profile.style.height = '120px'
-                    profile.style.backgroundSize = '140%'
-                    profile.style.borderRadius = '50%'
-                    profile.style.border = '2px solid rgba(0, 0, 0, 0.1)'
-                    profile.style.position = 'center'
-                    box.style.width = '95px'
-                    box.style.height = '95px'
-                    box.href = 'https://playentry.org/profile/'+user_id.id+'/project'
-                    box.append(br)
-                    box.append(profile)
-                    bar.append(box)
-                    bar.append(nick)
-                    page.append(bar)
-                    view.append(page)
-                    document.querySelector('div.css-1em6nuk.ex6tgf88').style.padding = '2px 30px 80px'
-                    document.querySelector('div.css-1em6nuk.ex6tgf88').parentElement.style.padding = '80px 30px 130px'
-                    if (user_info != null){
-                        if (user_info['profileImage'] == null) {
-                            profile.style.backgroundImage = 'url("/img/DefaultCardUserThmb.svg")'
-                        }else {
-                            profile.style.backgroundImage = 'url("/uploads/'+user_info.profileImage.filename.substr(0,2) + '/'+user_info.profileImage.filename.substr(2,2)+'/'+user_info.profileImage.filename+'.'+user_info.profileImage.imageType+'")'
+                        user_info = (await (await fetch("https://playentry.org/graphql", {
+                            "method": "POST",
+                            "headers":{
+                                "Content-Type": "application/json",
+                                "x-client-type": "Client",
+                                "CSRF-Token": csrf,
+                                "x-token": xtoken
+                            },
+                            "body": JSON.stringify({
+                                "query":"\n    query FIND_USERSTATUS_BY_USERNAME($id: String) {\n        userstatus(id: $id) {\n            id\n            nickname\n            username\n            description\n            shortUrl\n            profileImage {\n                \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n            }\n            coverImage {\n                \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n            }\n            role\n            mark {\n                \n    id\n    name\n    label {\n        \n    ko\n    en\n    ja\n    vn\n\n    }\n    filename\n    imageType\n    dimension {\n        \n    width\n    height\n\n    }\n    trimmed {\n        filename\n        width\n        height\n    }\n\n            }\n            studentTerm\n            status {\n                project\n                projectAll\n                study\n                studyAll\n                community {\n                    qna\n                    tips\n                    free\n                }\n                following\n                follower\n                bookmark {\n                    project\n                    study\n                }\n                userStatus\n            }\n        }\n    }\n",
+                                "variables":{"id": user_id.id}
+                            })
+                        })).json()).data.userstatus
+                        view = document.createElement('div')
+                        view.className = 'css-mqzyfz ex6tgf85'
+                        view.style.margin = '20px 0px 0px'
+                        view.style.padding = '8px 0px 38px'
+                        br = document.createElement('br')
+                        view.append(br)
+                        text = document.createElement('h3')
+                        text.style.margin = '10px 0px 0px'
+                        text.textContent = '유저'
+                        text.style.fontSize = '26px'
+                        text.style.fontWeight = 600
+                        view.append(text)
+                        nick = document.createElement('a')
+                        nick.textContent = ' ' + document.querySelector('input#CommonSearch').value
+                        nick.style.color = 'black'
+                        nick.style.fontSize = '50px'
+                        nick.style.fontWeight = 'bold'
+                        nick.style.lineHeight = '120px'
+                        page = document.createElement('div')
+                        page.className = 'css-d3v9zr ebdmqkt3'
+                        bar = document.createElement('div')
+                        box = document.createElement('a')
+                        bar.className = 'css-10snqeb ebdmqkt2'
+                        profile = document.createElement('img')
+                        profile.style.backgroundPosition = 'center'
+                        profile.style.width = '120px'
+                        profile.style.height = '120px'
+                        profile.style.backgroundSize = '140%'
+                        profile.style.borderRadius = '50%'
+                        profile.style.border = '2px solid rgba(0, 0, 0, 0.1)'
+                        profile.style.position = 'center'
+                        box.style.width = '95px'
+                        box.style.height = '95px'
+                        box.href = 'https://playentry.org/profile/'+user_id.id+'/project'
+                        box.append(br)
+                        box.append(profile)
+                        bar.append(box)
+                        bar.append(nick)
+                        page.append(bar)
+                        view.append(page)
+                        //document.querySelector('div.css-1em6nuk.ex6tgf88').style.padding = '2px 30px 80px'
+                        //document.querySelector('div.css-1em6nuk.ex6tgf88').parentElement.style.padding = '80px 30px 130px'
+                        if (user_info != null){
+                            if (user_info['profileImage'] == null) {
+                                profile.style.backgroundImage = 'url("/img/DefaultCardUserThmb.svg")'
+                            }else {
+                                profile.style.backgroundImage = 'url("/uploads/'+user_info.profileImage.filename.substr(0,2) + '/'+user_info.profileImage.filename.substr(2,2)+'/'+user_info.profileImage.filename+'.'+user_info.profileImage.imageType+'")'
+                            }
+                            nick.href = 'https://playentry.org/profile/'+user_id.id+'/project'
+                            console.log(Object.keys(user_info))
+                            if (pf){
+                                document.querySelector('div.css-1em6nuk.ex6tgf88').children[1].insertAdjacentElement('afterEnd', view)
+                                pf = false
+                            }
                         }
-                    nick.href = 'https://playentry.org/profile/'+user_id.id+'/project'
-                    console.log(Object.keys(user_info))
-                    if (pf){
-                        document.querySelector('div.css-1em6nuk.ex6tgf88').children[1].insertAdjacentElement('afterEnd', view)
-                        pf = false
                     }
                 }
             }
+        }else{
+            pf = true
+            user_id = null
+            finded = ''
+            usernick = ''
         }
-    }
-}
     }), 10)
 })
