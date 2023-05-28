@@ -193,7 +193,7 @@ window.addEventListener('load', function() {
                             })
                             return await crt.json();
                         })(cont, id);
-                        location.reload()
+                        setTimeout(()=> location.reload(), 500)
                             }else {
                                 cont = e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].textContent
                                 if(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].childNodes.length > 0){
