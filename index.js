@@ -878,4 +878,86 @@ window.addEventListener('load', function() {
             usernick = ''
         }
     }), 10)
+    `searcha = true
+    searchAfter = undefined
+    alarms = []
+    check_alarm = 0
+    setInterval(async function(){
+        if (location.href == "https://playentry.org/alarm"){
+            var getIdeal = function(){
+                var next_data = document.getElementById("__NEXT_DATA__");
+                var nj = JSON.parse(next_data.innerText);
+                return {csrf: nj.props.initialProps.csrfToken, xtoken: nj.props.initialState.common.user.xToken};
+            };
+            idl = getIdeal()
+            csrf = idl.csrf
+            xtoken = idl.xtoken
+            if (searcha){
+                setInterval(()=> searcha = false, 1)
+                alarm_list = (await (await fetch("https://playentry.org/graphql", {
+                    "method": "POST",
+                    "headers":{
+                        "Content-Type": "application/json",
+                        "x-client-type": "Client",
+                        "CSRF-Token": csrf,
+                        "x-token": xtoken
+                    },
+                    "body": JSON.stringify({
+                        "query": "\n    query SELECT_TOPICS($pageParam: PageParam, $searchAfter: JSON){\n        topicList(pageParam: $pageParam, searchAfter: $searchAfter) {\n            searchAfter\n            list {\n                \n    id\n    params\n    template\n    thumbUrl\n    category\n    target\n    isRead\n    created\n    updated\n    link {\n        category\n        target\n        hash\n        groupId\n    }\n    topicinfo {\n        category\n        targetId\n    }\n\n            }\n        }\n    }\n",
+                        "variables":{
+                            "pageParam":{"display":20}
+                        }
+                    })
+                })).json()).data.topicList
+                alarms = alarms.concat(alarm_list.list)
+                console.log(alarms)
+                searchAfter = alarm_list.searchAfter
+                document.getElementsByClassName('css-7ndem5 e1t7hnws1')[0].addEventListener('click', (async function(){
+                    if (searchAfter != null) {
+                        alarm_list = (await (await fetch("https://playentry.org/graphql", {
+                            "method": "POST",
+                            "headers":{
+                                "Content-Type": "application/json",
+                                "x-client-type": "Client",
+                                "CSRF-Token": csrf,
+                                "x-token": xtoken
+                            },
+                            "body": JSON.stringify({
+                                "query": "\n    query SELECT_TOPICS($pageParam: PageParam, $searchAfter: JSON){\n        topicList(pageParam: $pageParam, searchAfter: $searchAfter) {\n            searchAfter\n            list {\n                \n    id\n    params\n    template\n    thumbUrl\n    category\n    target\n    isRead\n    created\n    updated\n    link {\n        category\n        target\n        hash\n        groupId\n    }\n    topicinfo {\n        category\n        targetId\n    }\n\n            }\n        }\n    }\n",
+                                "variables":{
+                                    "pageParam":{"display":20},
+                                    "searchAfter":searchAfter
+                                }
+                            })
+                        })).json()).data.topicList
+                        alarms = alarms.concat(alarm_list.list)
+                        searchAfter = alarm_list.searchAfter
+                        alarm_list = []
+                        console.log(alarms)
+                    }
+                }))
+            }
+            if (check_alarm < document.getElementsByTagName('dd').length){
+                alarm_box = document.getElementsByTagName('dd')
+                document.getElementsByTagName('dd')[check_alarm].firstChild.nextElementSibling.addEventListener('click', function(e){
+                    alarms.splice(Math.floor((e.pageY-document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetTop+document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetHeight+document.getElementsByClassName('css-ckx8rv e1t7hnws10')[0].offsetTop)/document.getElementsByTagName('dd')[0].offsetHeight), 1)
+                    check_alarm = check_alarm - 1
+                })
+                if (check_alarm < alarms.length){
+                    if (alarms[check_alarm].category == 'discuss' && alarms[check_alarm].link.category == 'free'){
+                        document.getElementsByTagName('dd')[check_alarm].firstChild.style.cursor = 'pointer'
+                        document.getElementsByTagName('dd')[check_alarm].firstChild.addEventListener('click', function(e){
+                            console.log(Math.floor((e.pageY-document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetTop+document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetHeight+document.getElementsByClassName('css-ckx8rv e1t7hnws10')[0].offsetTop)/document.getElementsByTagName('dd')[0].offsetHeight))
+                            location.href = 'https://playentry.org/community/entrystory/'+alarms[Math.floor((e.pageY-document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetTop+document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetHeight+document.getElementsByClassName('css-ckx8rv e1t7hnws10')[0].offsetTop)/document.getElementsByTagName('dd')[0].offsetHeight)].link.target
+                        })
+                    }
+                    check_alarm = check_alarm + 1
+                }
+            }else{
+                searchAfter = undefined
+                alarms = []
+                check_alarm = 0
+            }
+        }
+    }, 100)`
 })
