@@ -10,8 +10,8 @@ window.addEventListener('load', function() {
                         document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML = '<br><img width=300px; height=auto; src=' + document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML +'> </img></br>'
                     }
                 }
-                if (document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.indexOf('\n') >= 0){
-                    document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML = document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replace('\n', '<br>').replaceAll('\n', '<br>').replaceAll('</div>', '</br></div>')
+                if (document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replaceAll('&lt;br /&gt;', '\n').indexOf('\n') >= 0){
+                    document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML = document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replaceAll('&lt;br /&gt;', '\n').replace('\n', '<br>').replaceAll('\n', '<br>').replaceAll('</div>', '</br></div>')
                 }
             }
         }
@@ -26,18 +26,20 @@ window.addEventListener('load', function() {
             upload_.src = 'https://playentry.org/img/IcoCmtPicture.svg'
             upload_com.src = 'https://playentry.org/img/IcoCmtPicture.svg'
             upload.src = 'https://playentry.org/img/IcoCmtPicture.svg'
-            if (document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].childElementCount <= 2){
-                document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].appendChild(blank)
-                if (location.pathname.indexOf('/entrystory') >= 0) {
-                    document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].appendChild(upload)
-                }else {
-                    document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].appendChild(upload_)
+            if (document.querySelectorAll('div.css-109f9np.e1h77j9v7').length > 0){
+                if (document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].childElementCount <= 2){
+                    document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].appendChild(blank)
+                    if (location.pathname.indexOf('/entrystory') >= 0) {
+                        document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].appendChild(upload)
+                    }else {
+                        document.querySelectorAll('div.css-109f9np.e1h77j9v7')[0].appendChild(upload_)
+                    }
                 }
-            }
-            for (let i = 1; i < document.querySelectorAll('div.css-109f9np.e1h77j9v7').length; i++) {
-                if (document.querySelectorAll('div.css-109f9np.e1h77j9v7')[i].children.length <= 1){
-                    document.querySelectorAll('div.css-109f9np.e1h77j9v7')[i].appendChild(blank)
-                    document.querySelectorAll('div.css-109f9np.e1h77j9v7')[i].appendChild(upload_com)
+                for (let i = 1; i < document.querySelectorAll('div.css-109f9np.e1h77j9v7').length; i++) {
+                    if (document.querySelectorAll('div.css-109f9np.e1h77j9v7')[i].children.length <= 1){
+                        document.querySelectorAll('div.css-109f9np.e1h77j9v7')[i].appendChild(blank)
+                        document.querySelectorAll('div.css-109f9np.e1h77j9v7')[i].appendChild(upload_com)
+                    }
                 }
             }
             upload.addEventListener('click', function(e){
@@ -137,9 +139,6 @@ window.addEventListener('load', function() {
                         id = id_._id
                         filename = id_.filename
                         filetype = '.' + id_.imageType.replace('jpg', 'jpeg')
-                        console.log(id)
-                        console.log(filetype)
-                        console.log(filename)
                     } catch {
                         return;
                     }
@@ -175,7 +174,6 @@ window.addEventListener('load', function() {
                                 }),
                                 "method": "POST"
                             })).json()).data.createEntryStory.discuss.id;
-                            console.log(Id)
                             var crt = await fetch("https://playentry.org/graphql", {
                                     "headers": {
                                         "Content-Type": "application/json",
@@ -200,7 +198,6 @@ window.addEventListener('load', function() {
                             }else {
                                 cont = e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].textContent
                                 if(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].childNodes.length > 0){
-                                    console.log(e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild)
                                     e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.nodeValue =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
                                     e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.textContent =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
                                     e.target.parentElement.parentElement.parentElement.children[1].firstChild.children[0].firstChild.wholeText =  cont + " https://playentry.org/uploads/"+filename.substring(0, 2)+"/"+filename.substring(2, 4)+"/"+filename+filetype
@@ -312,7 +309,6 @@ window.addEventListener('load', function() {
                             image.src = globalThis.URL.createObjectURL(file);
                         });
                     };
-                
                     var load = function(){
                         return new Promise(function(res, rej){
                             let input = document.createElement("input");
@@ -336,7 +332,6 @@ window.addEventListener('load', function() {
                                         rej();
                                     }
                                 }
-                
                                 let fd = new FormData();
                                 fd.append("file", input.files[0]);
                                 fd.append("type", "notcompress");
@@ -377,9 +372,6 @@ window.addEventListener('load', function() {
                         id = id_._id
                         filename = id_.filename
                         filetype = '.' + id_.imageType.replace('jpg', 'jpeg')
-                        console.log(id)
-                        console.log(filetype)
-                        console.log(filename)
                     } catch {
                         return;
                     }
@@ -511,7 +503,6 @@ window.addEventListener('load', function() {
                             image.src = globalThis.URL.createObjectURL(file);
                         });
                     };
-                
                     var load = function(){
                         return new Promise(function(res, rej){
                             let input = document.createElement("input");
@@ -535,7 +526,6 @@ window.addEventListener('load', function() {
                                         rej();
                                     }
                                 }
-                
                                 let fd = new FormData();
                                 fd.append("file", input.files[0]);
                                 fd.append("type", "notcompress");
@@ -576,9 +566,6 @@ window.addEventListener('load', function() {
                         id = id_._id
                         filename = id_.filename
                         filetype = '.' + id_.imageType.replace('jpg', 'jpeg')
-                        console.log(id)
-                        console.log(filetype)
-                        console.log(filename)
                     } catch {
                         return;
                     }
@@ -766,7 +753,6 @@ window.addEventListener('load', function() {
                     pf = true
                 }
                 finded = document.location.href
-                console.log(document.location.search.split('&tag=')[1])
                 var getIdeal = function(){
                     var next_data = document.getElementById("__NEXT_DATA__");
                     var nj = JSON.parse(next_data.innerText);
@@ -799,7 +785,6 @@ window.addEventListener('load', function() {
                         })
                     })).json()).data.user
                 }
-                console.log(user_id)
                 if (user_id != null) {
                     if (document.querySelector('a.false.css-1xir1du.ex6tgf86').parentElement.childElementCount < 6){
                         user_info = (await (await fetch("https://playentry.org/graphql", {
@@ -862,7 +847,6 @@ window.addEventListener('load', function() {
                                 profile.style.backgroundImage = 'url("/uploads/'+user_info.profileImage.filename.substr(0,2) + '/'+user_info.profileImage.filename.substr(2,2)+'/'+user_info.profileImage.filename+'.'+user_info.profileImage.imageType+'")'
                             }
                             nick.href = 'https://playentry.org/profile/'+user_id.id+'/project'
-                            console.log(Object.keys(user_info))
                             if (pf){
                                 document.querySelector('div.css-1em6nuk.ex6tgf88').children[1].insertAdjacentElement('afterEnd', view)
                                 pf = false
@@ -878,8 +862,8 @@ window.addEventListener('load', function() {
             usernick = ''
         }
     }), 10)
-    `searcha = true
-    searchAfter = undefined
+    searcha = true
+    searchAfter = ''
     alarms = []
     check_alarm = 0
     setInterval(async function(){
@@ -892,7 +876,22 @@ window.addEventListener('load', function() {
             idl = getIdeal()
             csrf = idl.csrf
             xtoken = idl.xtoken
+            if (document.getElementsByClassName('alarm').length > 0){
+                document.getElementsByClassName('alarm')[0].addEventListener('click', function(){
+                    location.reload()
+                })
+            }
+            if (document.getElementsByClassName('css-mop10c e5hayu94').length > 0){
+                document.getElementsByClassName('css-mop10c e5hayu94')[0].addEventListener('click', function(){
+                    location.reload()
+                })
+            }
             if (searcha){
+                document.getElementsByClassName('css-1wtcqou e1t7hnws5')[0].addEventListener('click', function(){
+                    alarm = []
+                    check_alarm = 0
+                    searchAfter = null
+                })
                 setInterval(()=> searcha = false, 1)
                 alarm_list = (await (await fetch("https://playentry.org/graphql", {
                     "method": "POST",
@@ -909,10 +908,47 @@ window.addEventListener('load', function() {
                         }
                     })
                 })).json()).data.topicList
-                alarms = alarms.concat(alarm_list.list)
-                console.log(alarms)
+                if (alarms.length < document.getElementsByTagName('dd').length){
+                    alarms = alarms.concat(alarm_list.list)
+                }
                 searchAfter = alarm_list.searchAfter
-                document.getElementsByClassName('css-7ndem5 e1t7hnws1')[0].addEventListener('click', (async function(){
+                if (document.getElementsByClassName('css-7ndem5 e1t7hnws1').length > 0){
+                    document.getElementsByClassName('css-7ndem5 e1t7hnws1')[0].addEventListener('click', (async function(){
+                        if (searchAfter != null) {
+                            alarm_list = (await (await fetch("https://playentry.org/graphql", {
+                                "method": "POST",
+                                "headers":{
+                                    "Content-Type": "application/json",
+                                    "x-client-type": "Client",
+                                    "CSRF-Token": csrf,
+                                    "x-token": xtoken
+                                },
+                                "body": JSON.stringify({
+                                    "query": "\n    query SELECT_TOPICS($pageParam: PageParam, $searchAfter: JSON){\n        topicList(pageParam: $pageParam, searchAfter: $searchAfter) {\n            searchAfter\n            list {\n                \n    id\n    params\n    template\n    thumbUrl\n    category\n    target\n    isRead\n    created\n    updated\n    link {\n        category\n        target\n        hash\n        groupId\n    }\n    topicinfo {\n        category\n        targetId\n    }\n\n            }\n        }\n    }\n",
+                                    "variables":{
+                                        "pageParam":{"display":20},
+                                        "searchAfter":searchAfter
+                                    }
+                                })
+                            })).json()).data.topicList
+                            setTimeout(function(){
+                                if (alarms.length < document.getElementsByTagName('dd').length){
+                                    alarms = alarms.concat(alarm_list.list)
+                                    searchAfter = alarm_list.searchAfter
+                                }
+                                alarm_list = []
+                                check_alarm = 0
+                            }, 40)
+                        }
+                    }))
+                }
+            }
+            sp = document.createElement('span')
+            sp.hidden = true
+            if (check_alarm < alarms.length){
+                alarm_box = document.getElementsByTagName('dd')
+                document.getElementsByTagName('dd')[check_alarm].firstChild.nextElementSibling.addEventListener('click', async function(e){
+                    n = Number(e.target.parentElement.lastChild.textContent)
                     if (searchAfter != null) {
                         alarm_list = (await (await fetch("https://playentry.org/graphql", {
                             "method": "POST",
@@ -925,39 +961,46 @@ window.addEventListener('load', function() {
                             "body": JSON.stringify({
                                 "query": "\n    query SELECT_TOPICS($pageParam: PageParam, $searchAfter: JSON){\n        topicList(pageParam: $pageParam, searchAfter: $searchAfter) {\n            searchAfter\n            list {\n                \n    id\n    params\n    template\n    thumbUrl\n    category\n    target\n    isRead\n    created\n    updated\n    link {\n        category\n        target\n        hash\n        groupId\n    }\n    topicinfo {\n        category\n        targetId\n    }\n\n            }\n        }\n    }\n",
                                 "variables":{
-                                    "pageParam":{"display":20},
+                                    "pageParam":{"display":1},
                                     "searchAfter":searchAfter
                                 }
                             })
                         })).json()).data.topicList
-                        alarms = alarms.concat(alarm_list.list)
+                        alarms.splice(n, 1)
+                        alarms.push(alarm_list.list[0])
                         searchAfter = alarm_list.searchAfter
                         alarm_list = []
-                        console.log(alarms)
+                        setTimeout(()=> check_alarm = 0, 40)
+                    }else{
+                        setTimeout(()=> check_alarm = 0, 40)
                     }
-                }))
-            }
-            if (check_alarm < document.getElementsByTagName('dd').length){
-                alarm_box = document.getElementsByTagName('dd')
-                document.getElementsByTagName('dd')[check_alarm].firstChild.nextElementSibling.addEventListener('click', function(e){
-                    alarms.splice(Math.floor((e.pageY-document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetTop+document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetHeight+document.getElementsByClassName('css-ckx8rv e1t7hnws10')[0].offsetTop)/document.getElementsByTagName('dd')[0].offsetHeight), 1)
-                    check_alarm = check_alarm - 1
                 })
-                if (check_alarm < alarms.length){
-                    if (alarms[check_alarm].category == 'discuss' && alarms[check_alarm].link.category == 'free'){
-                        document.getElementsByTagName('dd')[check_alarm].firstChild.style.cursor = 'pointer'
-                        document.getElementsByTagName('dd')[check_alarm].firstChild.addEventListener('click', function(e){
-                            console.log(Math.floor((e.pageY-document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetTop+document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetHeight+document.getElementsByClassName('css-ckx8rv e1t7hnws10')[0].offsetTop)/document.getElementsByTagName('dd')[0].offsetHeight))
-                            location.href = 'https://playentry.org/community/entrystory/'+alarms[Math.floor((e.pageY-document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetTop+document.getElementsByClassName('css-1m6cij2 e1t7hnws8')[0].offsetHeight+document.getElementsByClassName('css-ckx8rv e1t7hnws10')[0].offsetTop)/document.getElementsByTagName('dd')[0].offsetHeight)].link.target
+                sp.textContent = String(check_alarm)
+                document.getElementsByTagName('dd')[check_alarm].appendChild(sp)
+                if (alarms[check_alarm].link.category == 'free'){
+                    document.getElementsByTagName('dd')[check_alarm].firstChild.style.cursor = 'pointer'
+                    document.getElementsByTagName('dd')[check_alarm].firstChild.addEventListener('click', function(e){
+                        location.href = 'https://playentry.org/community/entrystory/'+alarms[Number(e.target.parentElement.lastChild.textContent)].link.target
+                    })
+                    document.getElementsByTagName('dd')[check_alarm].firstChild.firstChild.addEventListener('click', function(e){
+                        location.href = 'https://playentry.org/community/entrystory/'+alarms[Number(e.target.parentElement.parentElement.lastChild.textContent)].link.target
+                    })
+                    document.getElementsByTagName('dd')[check_alarm].firstChild.firstChild.firstChild.addEventListener('click', function(e){
+                        location.href = 'https://playentry.org/community/entrystory/'+alarms[Number(e.target.parentElement.parentElement.parentElement.lastChild.textContent)].link.target
+                    })
+                    for (let m=0; m < document.getElementsByTagName('dd')[check_alarm].firstChild.firstChild.firstChild.childNodes.length; m++){
+                        document.getElementsByTagName('dd')[check_alarm].firstChild.firstChild.firstChild.childNodes[m].addEventListener('click', function(e){
+                            location.href = 'https://playentry.org/community/entrystory/'+alarms[Number(e.target.parentElement.parentElement.parentElement.parentElement.lastChild.textContent)].link.target
                         })
                     }
-                    check_alarm = check_alarm + 1
                 }
-            }else{
-                searchAfter = undefined
-                alarms = []
-                check_alarm = 0
+                check_alarm = check_alarm + 1
             }
+        }else{
+            searchAfter = undefined
+            alarms = []
+            check_alarm = 0
+            searcha = true
         }
-    }, 100)`
+    }, 4)
 })
