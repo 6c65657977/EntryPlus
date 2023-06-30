@@ -897,11 +897,13 @@ window.addEventListener('load', function() {
                 })
             }
             if (searcha){
-                document.getElementsByClassName('css-1wtcqou e1t7hnws5')[0].addEventListener('click', function(){
-                    alarm = []
-                    check_alarm = 0
-                    searchAfter = null
-                })
+                if (document.getElementsByClassName('css-kuuduf e1t7hnws3').length > 1){
+                    document.getElementsByClassName('css-kuuduf e1t7hnws3')[1].addEventListener('click', function(){
+                        alarm = []
+                        check_alarm = 0
+                        searchAfter = null
+                    })
+                }
                 setInterval(()=> searcha = false, 1)
                 alarm_list = (await (await fetch("https://playentry.org/graphql", {
                     "method": "POST",
