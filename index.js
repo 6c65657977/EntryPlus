@@ -7,7 +7,11 @@ window.addEventListener('load', function() {
                 start = 0
                 for (let j = 0; j < contents[i].children.length; j++){
                     if (contents[i].children[j].outerHTML.replace('/𝕡layentry.org/', '/playentry.org/').indexOf('<a target="_blank" href="https://playentry.org/uploads/') == 0 && contents[i].children[j].outerHTML.indexOf('<img ') == -1){
-                        document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML = '<br><img width=300px; height=auto; src=' + document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML +'> </img></br>'
+                        if (contents[i].children[j].outerHTML.indexOf('/signout') >= 0){
+                            contents[i].children[j].outerHTML = contents[i].children[j].outerHTML.replaceAll('signout', '')
+                        }else{
+                            document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML = '<br><img width=300px; height=auto; src=' + document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].children[j].innerHTML +'> </img></br>'
+                        }
                     }
                 }
                 if (document.querySelectorAll('div.css-sy8ihv.e1i41bku1')[i].outerHTML.replaceAll('&lt;br /&gt;', '\n').indexOf('\n') >= 0){
